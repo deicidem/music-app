@@ -3,7 +3,10 @@
 <template>
   <LayoutsDefault>
     <LayoutsDefaultHeader />
+
     <slot />
+
+    <ModalAuth />
   </LayoutsDefault>
 </template>
 

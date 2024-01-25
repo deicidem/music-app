@@ -1,4 +1,10 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const { isOpen } = storeToRefs(useModalStore());
+
+const toggleAuthModal = () => {
+  isOpen.value = !isOpen.value;
+};
+</script>
 
 <template>
   <header id="header" class="bg-gray-700">
@@ -11,7 +17,9 @@
         <ul class="flex flex-row mt-1">
           <!-- Navigation Links -->
           <li>
-            <a class="px-2 text-white" href="#">Login / Register</a>
+            <a class="px-2 text-white" href="#" @click.prevent="toggleAuthModal"
+              >Login / Register</a
+            >
           </li>
           <li>
             <a class="px-2 text-white" href="#">Manage</a>
