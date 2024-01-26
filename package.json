@@ -27,6 +27,7 @@
     "@nuxtjs/tailwindcss": "latest",
     "@pinia/nuxt": "^0.5.1",
     "@typescript-eslint/parser": "^6.19.1",
+    "@vee-validate/rules": "^4.12.4",
     "@vueuse/core": "^10.5.0",
     "@vueuse/nuxt": "^10.7.2",
     "ajv": "^8.12.0",
@@ -39,11 +40,13 @@
     "nuxt-vitest": "^0.11.5",
     "pinia": "^2.1.7",
     "prettier-eslint": "^16.3.0",
-    "sass": "^1.69.5"
+    "sass": "^1.69.5",
+    "vee-validate": "^4.12.4"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@nuxtjs/eslint-module": "^4.1.0",
+    "@vee-validate/nuxt": "latest",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.1.3",

@@ -4,17 +4,20 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-
+  imports: {
+    dirs: ["types"],
+  },
   modules: [
     // chore
-    "@nuxtjs/eslint-module", // styling & ui
-
+    // styling & ui
+    "@nuxtjs/eslint-module",
     "nuxt-vitest",
     "@nuxtjs/tailwindcss",
     "@pinia/nuxt",
     "@nuxtjs/google-fonts",
     "nuxt-purgecss",
     "@vueuse/nuxt",
+    "@vee-validate/nuxt",
   ],
   css: [
     "./assets/css/main.css",
@@ -26,6 +29,17 @@ export default defineNuxtConfig({
   googleFonts: {
     families: {
       Roboto: true,
+    },
+  },
+  veeValidate: {
+    // disable or enable auto imports
+    autoImports: true,
+    // Use different names for components
+    componentNames: {
+      Form: "VeeForm",
+      Field: "VeeField",
+      FieldArray: "VeeFieldArray",
+      ErrorMessage: "VeeErrorMessage",
     },
   },
   // postcss: {
