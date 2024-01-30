@@ -1,13 +1,6 @@
 import * as rules from "@vee-validate/rules";
 import { defineRule, configure } from "vee-validate";
-// write function snake case to camel case
 export default defineNuxtPlugin((_nuxtApp) => {
-  // Object.keys(rules)
-  //   .filter((key) => key !== "default")
-  //   .forEach((rule) => {
-  //     defineRule(rule, rules[rule]);
-  //   });
-
   defineRule("required", rules.required);
   defineRule("tos", rules.required);
   defineRule("min", rules.min);
@@ -22,6 +15,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
 
   configure({
     generateMessage(ctx) {
+      console.log(ctx);
       const messages = {
         required: `The ${ctx.field} field is required.`,
         min: `The ${ctx.field} must be at least ${ctx.rule?.params?.[0]} characters.`,

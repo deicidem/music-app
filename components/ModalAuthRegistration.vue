@@ -1,19 +1,57 @@
 <script lang="ts" setup>
-import type { GenericObject } from "vee-validate";
+import { z } from "zod";
 
-const userData = reactive({
-  country: "USA",
+const form = useForm({
+  validationSchema: toTypedSchema(
+    z.object({
+      name: z.string().min(3).max(100).trim(),
+      email: z.string().email().min(3).max(100),
+      age: z.number().gte(18).lte(100).int(),
+      country: z
+        .string()
+        .refine(
+          (str) => str !== "Antarctica",
+          "Due to restrictions, we do not accept users from this location.",
+        ),
+      passwords: z
+        .object({
+          password: z
+            .string()
+            .min(9)
+            .max(100)
+            .refine(
+              (str) => str !== "password",
+              "Password should not be 'password'",
+            ),
+          passwordConfirmation: z.string().min(9).max(100),
+        })
+        .refine(
+          (data) => {
+            return data.password === data.passwordConfirmation;
+          },
+          {
+            message: "Passwords do not match",
+            path: ["passwordConfirmation"],
+          },
+        ),
+      tos: z.boolean(),
+    }),
+  ),
+  initialValues: {
+    tos: true,
+  },
 });
 
-const schema = reactive({
-  name: "required|min:3|max:100|alpha_spaces",
-  email: "required|email|min:3|max:100",
-  age: "required|min_value:18|max_value:100",
-  password: "required|min:9|max:100|excluded:password",
-  passwordConfirmation: "password_mismatch:@password",
-  country: "required|country_excluded:Antarctica",
-  tos: "tos",
-});
+const [name, nameAttrs] = form.defineField("name");
+const [email, emailAttrs] = form.defineField("email");
+const [age, ageAttrs] = form.defineField("age");
+const [password, passwordAttrs] = form.defineField("passwords.password");
+
+const [passwordConfirmation, passwordConfirmationAttrs] = form.defineField(
+  "passwords.passwordConfirmation",
+);
+const [country, countryAttrs] = form.defineField("country");
+const [tos, tosAttrs] = form.defineField("tos");
 
 enum AlertVariants {
   BLUE = "bg-blue-500",
@@ -32,7 +70,7 @@ const regShowAlert = ref(false);
 const regAlertVariant = ref(AlertVariants.BLUE);
 const regAlertMsg = ref(AlertMessages.WAIT);
 
-const register = (values: GenericObject) => {
+const register = form.handleSubmit((values) => {
   regShowAlert.value = true;
   regInProgress.value = true;
   regAlertVariant.value = AlertVariants.BLUE;
@@ -45,7 +83,7 @@ const register = (values: GenericObject) => {
   }, 2000);
 
   console.log(values);
-};
+});
 </script>
 
 <template>
@@ -56,75 +94,90 @@ const register = (values: GenericObject) => {
   >
     {{ regAlertMsg }}
   </div>
-  <VeeForm
-    :="$attrs"
-    :validation-schema="schema"
-    :initial-values="userData"
-    @submit="(values) => register(values)"
-  >
+  <form :="$attrs" @submit="register">
     <!-- Name -->
     <div class="mb-3">
       <label class="inline-block mb-2">Name</label>
-      <VeeField
+      <input
+        v-model="name"
+        v-bind="nameAttrs"
         name="name"
         type="text"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
         placeholder="Enter Name"
       />
-      <VeeErrorMessage class="text-red-600" name="name" />
+      <div class="text-red-600">
+        {{ form.errors.value.name }}
+      </div>
     </div>
     <!-- Email -->
     <div class="mb-3">
       <label class="inline-block mb-2">Email</label>
-      <VeeField
+      <input
+        v-model="email"
+        v-bind="emailAttrs"
         name="email"
         type="email"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
         placeholder="Enter Email"
       />
-      <VeeErrorMessage class="text-red-600" name="email" />
+      <div class="text-red-600">
+        {{ form.errors.value.email }}
+      </div>
     </div>
     <!-- Age -->
     <div class="mb-3">
       <label class="inline-block mb-2">Age</label>
-      <VeeField
+      <input
+        v-model="age"
+        v-bind="ageAttrs"
         name="age"
         type="number"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
       />
-      <VeeErrorMessage class="text-red-600" name="age" />
+      <div class="text-red-600">
+        {{ form.errors.value.age }}
+      </div>
     </div>
     <!-- Password -->
     <div class="mb-3">
       <label class="inline-block mb-2">Password</label>
-      <VeeField name="password" :bails="false" #="{ field, errors }">
-        <input
-          type="password"
-          class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-          placeholder="Password"
-          :="field"
-        />
-        <div v-for="error in errors" :key="error" class="text-red-600">
-          {{ error }}
-        </div>
-      </VeeField>
+      <input
+        v-model="password"
+        v-bind="passwordAttrs"
+        type="password"
+        class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
+        placeholder="Password"
+      />
+      <div
+        v-for="error in form.errorBag.value['passwords.password']"
+        :key="error"
+        class="text-red-600"
+      >
+        {{ error }}
+      </div>
     </div>
     <!-- Confirm Password -->
     <div class="mb-3">
       <label class="inline-block mb-2">Confirm Password</label>
-      <VeeField
+      <input
+        v-model="passwordConfirmation"
+        v-bind="passwordConfirmationAttrs"
         name="passwordConfirmation"
         type="password"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
         placeholder="Confirm Password"
       />
-      <VeeErrorMessage class="text-red-600" name="passwordConfirmation" />
+      <div class="text-red-600">
+        {{ form.errors.value["passwords.passwordConfirmation"] }}
+      </div>
     </div>
     <!-- Country -->
     <div class="mb-3">
       <label class="inline-block mb-2">Country</label>
-      <VeeField
-        as="select"
+      <select
+        v-model="country"
+        v-bind="countryAttrs"
         name="country"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
       >
@@ -135,20 +188,24 @@ const register = (values: GenericObject) => {
         <option value="Mexico">Mexico</option>
         <option value="Germany">Germany</option>
         <option value="Antarctica">Antarctica</option>
-      </VeeField>
-      <VeeErrorMessage class="text-red-600" name="country" />
+      </select>
+      <div class="text-red-600">
+        {{ form.errors.value.country }}
+      </div>
     </div>
     <!-- TOS -->
     <div class="mb-3 pl-6">
-      <VeeField
+      <input
+        v-model="tos"
+        v-bind="tosAttrs"
         name="tos"
         type="checkbox"
-        value="1"
-        :checked-value="true"
         class="w-4 h-4 float-left -ml-6 mt-1 rounded"
       />
       <label class="inline-block">Accept terms of service</label>
-      <VeeErrorMessage class="text-red-600 block" name="tos" />
+      <div class="text-red-600">
+        {{ form.errors.value.tos }}
+      </div>
     </div>
     <button
       type="submit"
@@ -157,7 +214,8 @@ const register = (values: GenericObject) => {
     >
       Submit
     </button>
-  </VeeForm>
+    {{ form.errorBag.value }}
+  </form>
 </template>
 
 <style lang="scss" scoped></style>
