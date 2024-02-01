@@ -5,7 +5,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   imports: {
-    dirs: ["types"],
+    dirs: ["types", "composables/**"],
   },
   modules: [
     // chore
@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     "nuxt-purgecss",
     "@vueuse/nuxt",
     "@vee-validate/nuxt",
+    "nuxt-vuefire",
   ],
   css: [
     "./assets/css/main.css",
@@ -40,6 +41,18 @@ export default defineNuxtConfig({
       Field: "VeeField",
       FieldArray: "VeeFieldArray",
       ErrorMessage: "VeeErrorMessage",
+    },
+  },
+  vuefire: {
+    config: {
+      apiKey: "AIzaSyAhCA5LdQuKLnC4rbO9yVAKg_9QmY_lrqk",
+      authDomain: "music-a2e01.firebaseapp.com",
+      projectId: "music-a2e01",
+      storageBucket: "music-a2e01.appspot.com",
+      appId: "1:155985681405:web:c2fe291216b57d8809d794",
+    },
+    auth: {
+      enabled: true,
     },
   },
   // postcss: {

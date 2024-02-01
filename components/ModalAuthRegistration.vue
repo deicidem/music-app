@@ -1,5 +1,8 @@
 <script lang="ts" setup>
+import { type UserCredential } from "firebase/auth";
 import { z } from "zod";
+
+const { createUser } = useAppFirebaseAuth();
 
 const form = useForm({
   validationSchema: toTypedSchema(
@@ -70,19 +73,28 @@ const regShowAlert = ref(false);
 const regAlertVariant = ref(AlertVariants.BLUE);
 const regAlertMsg = ref(AlertMessages.WAIT);
 
-const register = form.handleSubmit((values) => {
+const register = form.handleSubmit(async (values) => {
   regShowAlert.value = true;
   regInProgress.value = true;
   regAlertVariant.value = AlertVariants.BLUE;
   regAlertMsg.value = AlertMessages.WAIT;
 
-  setTimeout(() => {
-    regAlertVariant.value = AlertVariants.GREEN;
-    regAlertMsg.value = AlertMessages.SUCCESS;
-    regInProgress.value = false;
-  }, 2000);
+  let userCred: UserCredential | null = null;
 
-  console.log(values);
+  try {
+    userCred = await createUser(values.email, values.passwords.password);
+  } catch (error) {
+    regInProgress.value = false;
+    regAlertVariant.value = AlertVariants.RED;
+    regAlertMsg.value = AlertMessages.ERROR;
+    return;
+  }
+
+  console.log(userCred);
+
+  regInProgress.value = false;
+  regAlertVariant.value = AlertVariants.GREEN;
+  regAlertMsg.value = AlertMessages.SUCCESS;
 });
 </script>
 
