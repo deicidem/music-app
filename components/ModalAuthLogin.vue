@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { z } from "zod";
 
+const { authenticate } = useUserStore();
+
 const form = useForm({
   validationSchema: toTypedSchema(
     z.object({
@@ -37,19 +39,26 @@ const loginShowAlert = ref(false);
 const loginAlertVariant = ref(AlertVariants.BLUE);
 const loginAlertMsg = ref(AlertMessages.WAIT);
 
-const login = form.handleSubmit((values) => {
+const login = form.handleSubmit(async (values) => {
   loginShowAlert.value = true;
   loginInProgress.value = true;
   loginAlertVariant.value = AlertVariants.BLUE;
   loginAlertMsg.value = AlertMessages.WAIT;
 
-  setTimeout(() => {
-    loginAlertVariant.value = AlertVariants.GREEN;
-    loginAlertMsg.value = AlertMessages.SUCCESS;
+  try {
+    await authenticate(values);
+  } catch (error) {
+    loginShowAlert.value = true;
     loginInProgress.value = false;
-  }, 2000);
+    loginAlertVariant.value = AlertVariants.RED;
+    loginAlertMsg.value = AlertMessages.ERROR;
+    return;
+  }
 
-  console.log(values);
+  loginAlertVariant.value = AlertVariants.GREEN;
+  loginAlertMsg.value = AlertMessages.SUCCESS;
+  loginInProgress.value = false;
+  window.location.reload();
 });
 </script>
 

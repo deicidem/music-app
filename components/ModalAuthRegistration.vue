@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import { type UserCredential } from "firebase/auth";
 import { z } from "zod";
 
-const { createUser } = useAppFirebaseAuth();
-
+const { register: createUser } = useUserStore();
 const form = useForm({
   validationSchema: toTypedSchema(
     z.object({
@@ -79,10 +77,8 @@ const register = form.handleSubmit(async (values) => {
   regAlertVariant.value = AlertVariants.BLUE;
   regAlertMsg.value = AlertMessages.WAIT;
 
-  let userCred: UserCredential | null = null;
-
   try {
-    userCred = await createUser(values.email, values.passwords.password);
+    await createUser(values);
   } catch (error) {
     regInProgress.value = false;
     regAlertVariant.value = AlertVariants.RED;
@@ -90,11 +86,10 @@ const register = form.handleSubmit(async (values) => {
     return;
   }
 
-  console.log(userCred);
-
   regInProgress.value = false;
   regAlertVariant.value = AlertVariants.GREEN;
   regAlertMsg.value = AlertMessages.SUCCESS;
+  window.location.reload();
 });
 </script>
 
@@ -226,7 +221,6 @@ const register = form.handleSubmit(async (values) => {
     >
       Submit
     </button>
-    {{ form.errorBag.value }}
   </form>
 </template>
 
