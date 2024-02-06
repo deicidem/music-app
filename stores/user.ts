@@ -48,10 +48,7 @@ export const useUserStore = defineStore("User", () => {
     () => user.value,
     () => {
       console.log("watch", user.value);
-
-      if (user.value) {
-        userLoggedIn.value = true;
-      }
+      userLoggedIn.value = user.value != null;
     },
   );
 
