@@ -1,34 +1,34 @@
 <script lang="ts" setup>
-const { isOpen } = storeToRefs(useModalStore());
+const { isOpen } = storeToRefs(useModalStore())
 const closeModal = () => {
-  isOpen.value = false;
-};
+  isOpen.value = false
+}
 
-const target = ref<HTMLElement | null>(null);
+const target = ref<HTMLElement | null>(null)
 
 onClickOutside(target, () => {
-  closeModal();
-});
+  closeModal()
+})
 
-const activeTab = ref<"login" | "registration">("login");
+const activeTab = ref<'login' | 'registration'>('login')
 
-const activateTab = (tab: "login" | "registration") => {
-  activeTab.value = tab;
-};
+const activateTab = (tab: 'login' | 'registration') => {
+  activeTab.value = tab
+}
 
 const activeTabClass = computed(() => {
   return {
     login: {
-      "hover:text-white text-white bg-blue-600": activeTab.value === "login",
-      "hover:text-blue-600": activeTab.value === "registration",
+      'hover:text-white text-white bg-blue-600': activeTab.value === 'login',
+      'hover:text-blue-600': activeTab.value === 'registration'
     },
     registration: {
-      "hover:text-white text-white bg-blue-600":
-        activeTab.value === "registration",
-      "hover:text-blue-600": activeTab.value === "login",
-    },
-  };
-});
+      'hover:text-white text-white bg-blue-600':
+        activeTab.value === 'registration',
+      'hover:text-blue-600': activeTab.value === 'login'
+    }
+  }
+})
 </script>
 
 <template>
@@ -41,13 +41,11 @@ const activeTabClass = computed(() => {
       class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
     >
       <div class="fixed inset-0 transition-opacity">
-        <div class="absolute inset-0 bg-gray-800 opacity-75"></div>
+        <div class="absolute inset-0 bg-gray-800 opacity-75" />
       </div>
 
       <!-- This element is to trick the browser into centering the modal contents. -->
-      <span class="hidden sm:inline-block sm:align-middle sm:h-screen"
-        >&#8203;</span
-      >
+      <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
 
       <div
         ref="target"
@@ -57,10 +55,12 @@ const activeTabClass = computed(() => {
         <div class="py-4 text-left px-6">
           <!--Title-->
           <div class="flex justify-between items-center pb-4">
-            <p class="text-2xl font-bold">Your Account</p>
+            <p class="text-2xl font-bold">
+              Your Account
+            </p>
             <!-- Modal Close Button -->
             <div class="modal-close cursor-pointer z-50" @click="closeModal">
-              <i class="fas fa-times"></i>
+              <i class="fas fa-times" />
             </div>
           </div>
 
@@ -72,8 +72,7 @@ const activeTabClass = computed(() => {
                 :class="activeTabClass.login"
                 href="#"
                 @click.prevent="activateTab('login')"
-                >Login</a
-              >
+              >Login</a>
             </li>
             <li class="flex-auto text-center">
               <a
@@ -81,8 +80,7 @@ const activeTabClass = computed(() => {
                 href="#"
                 :class="activeTabClass.registration"
                 @click.prevent="activateTab('registration')"
-                >Register</a
-              >
+              >Register</a>
             </li>
           </ul>
 

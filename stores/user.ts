@@ -1,10 +1,10 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
-import { collection, doc, setDoc } from "firebase/firestore";
-import { defineStore } from "pinia";
+  signOut
+} from 'firebase/auth'
+import { collection, doc, setDoc } from 'firebase/firestore'
+import { defineStore } from 'pinia'
 
 export interface User {
   name: string;
@@ -37,49 +37,49 @@ type UserCreateData = {
   country: string;
 };
 
-export const useUserStore = defineStore("User", () => {
-  const auth = useFirebaseAuth()!;
+export const useUserStore = defineStore('User', () => {
+  const auth = useFirebaseAuth()!
 
-  const userLoggedIn = ref<boolean | null>(null);
+  const userLoggedIn = ref<boolean | null>(null)
 
   const createUser = async (email: string, password: string) => {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
-      password,
-    );
-    return userCredential;
-  };
+      password
+    )
+    return userCredential
+  }
 
   const addUser = async (uid: string, user: UserCreateData) => {
-    const store = useFirestore();
-    const usersCollection = collection(store, "users");
+    const store = useFirestore()
+    const usersCollection = collection(store, 'users')
 
-    return await setDoc(doc(usersCollection, uid), user);
-  };
+    return await setDoc(doc(usersCollection, uid), user)
+  }
 
   const register = async (values: UserRegistrationData) => {
     const userCredentials = await createUser(
       values.email,
-      values.passwords.password,
-    );
+      values.passwords.password
+    )
 
     await addUser(userCredentials.user.uid, {
       name: values.name,
       email: values.email,
       age: values.age,
-      country: values.country,
-    });
-  };
+      country: values.country
+    })
+  }
 
   const authenticate = async (values: UserAuthData) => {
-    await signInWithEmailAndPassword(auth, values.email, values.password);
-  };
+    await signInWithEmailAndPassword(auth, values.email, values.password)
+  }
 
   const logOut = async () => {
-    await signOut(auth);
-    userLoggedIn.value = false;
-  };
+    await signOut(auth)
+    userLoggedIn.value = false
+  }
 
-  return { userLoggedIn, register, authenticate, logOut };
-});
+  return { userLoggedIn, register, authenticate, logOut }
+})

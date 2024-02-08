@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-const { isOpen } = storeToRefs(useModalStore());
-const { userLoggedIn } = storeToRefs(useUserStore());
-const { logOut } = useUserStore();
+const { isOpen } = storeToRefs(useModalStore())
+const { userLoggedIn } = storeToRefs(useUserStore())
+const { logOut } = useUserStore()
 const toggleAuthModal = () => {
-  isOpen.value = !isOpen.value;
-};
+  isOpen.value = !isOpen.value
+}
 
 const signOut = async () => {
-  await logOut();
-  useRouter().push({ name: "home" });
-};
+  await logOut()
+  useRouter().push({ name: 'home' })
+}
 </script>
 
 <template>
@@ -29,20 +29,27 @@ const signOut = async () => {
         <ul class="flex flex-row mt-1">
           <!-- Navigation Links -->
           <li v-if="!userLoggedIn">
-            <a class="px-2 text-white" href="#" @click.prevent="toggleAuthModal"
-              >Login / Register</a
-            >
+            <a
+              class="px-2 text-white"
+              href="#"
+              @click.prevent="toggleAuthModal"
+            >Login / Register</a>
           </li>
           <template v-else>
             <li>
-              <a class="px-2 text-white" href="#" @click.prevent="signOut"
-                >Logout</a
-              >
+              <a
+                class="px-2 text-white"
+                href="#"
+                @click.prevent="signOut"
+              >Logout</a>
             </li>
             <li>
-              <NuxtLink class="px-2 text-white" :to="{ name: 'manage' }"
-                >Manage</NuxtLink
+              <NuxtLink
+                class="px-2 text-white"
+                :to="{ name: 'manage' }"
               >
+                Manage
+              </NuxtLink>
             </li>
           </template>
         </ul>

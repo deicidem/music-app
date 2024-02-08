@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { z } from "zod";
+import { z } from 'zod'
 
-const { authenticate } = useUserStore();
+const { authenticate } = useUserStore()
 
 const form = useForm({
   validationSchema: toTypedSchema(
@@ -13,53 +13,53 @@ const form = useForm({
         .min(9)
         .max(100)
         .refine(
-          (str) => str !== "password",
-          "Password should not be 'password'",
-        ),
-    }),
-  ),
-});
-const [email, emailAttrs] = form.defineField("email");
-const [password, passwordAttrs] = form.defineField("password");
+          str => str !== 'password',
+          "Password should not be 'password'"
+        )
+    })
+  )
+})
+const [email, emailAttrs] = form.defineField('email')
+const [password, passwordAttrs] = form.defineField('password')
 
 enum AlertVariants {
-  BLUE = "bg-blue-500",
-  GREEN = "bg-green-500",
-  RED = "bg-red-500",
+  BLUE = 'bg-blue-500',
+  GREEN = 'bg-green-500',
+  RED = 'bg-red-500',
 }
 
 enum AlertMessages {
-  WAIT = "Please wait! You are logging in.",
-  SUCCESS = "Success! You are now logged in.",
-  ERROR = "Invalid email or password. Please try again.",
+  WAIT = 'Please wait! You are logging in.',
+  SUCCESS = 'Success! You are now logged in.',
+  ERROR = 'Invalid email or password. Please try again.',
 }
 
-const loginInProgress = ref(false);
-const loginShowAlert = ref(false);
-const loginAlertVariant = ref(AlertVariants.BLUE);
-const loginAlertMsg = ref(AlertMessages.WAIT);
+const loginInProgress = ref(false)
+const loginShowAlert = ref(false)
+const loginAlertVariant = ref(AlertVariants.BLUE)
+const loginAlertMsg = ref(AlertMessages.WAIT)
 
 const login = form.handleSubmit(async (values) => {
-  loginShowAlert.value = true;
-  loginInProgress.value = true;
-  loginAlertVariant.value = AlertVariants.BLUE;
-  loginAlertMsg.value = AlertMessages.WAIT;
+  loginShowAlert.value = true
+  loginInProgress.value = true
+  loginAlertVariant.value = AlertVariants.BLUE
+  loginAlertMsg.value = AlertMessages.WAIT
 
   try {
-    await authenticate(values);
+    await authenticate(values)
   } catch (error) {
-    loginShowAlert.value = true;
-    loginInProgress.value = false;
-    loginAlertVariant.value = AlertVariants.RED;
-    loginAlertMsg.value = AlertMessages.ERROR;
-    return;
+    loginShowAlert.value = true
+    loginInProgress.value = false
+    loginAlertVariant.value = AlertVariants.RED
+    loginAlertMsg.value = AlertMessages.ERROR
+    return
   }
 
-  loginAlertVariant.value = AlertVariants.GREEN;
-  loginAlertMsg.value = AlertMessages.SUCCESS;
-  loginInProgress.value = false;
-  window.location.reload();
-});
+  loginAlertVariant.value = AlertVariants.GREEN
+  loginAlertMsg.value = AlertMessages.SUCCESS
+  loginInProgress.value = false
+  window.location.reload()
+})
 </script>
 
 <template>
@@ -81,7 +81,7 @@ const login = form.handleSubmit(async (values) => {
         type="email"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
         placeholder="Enter Email"
-      />
+      >
       <div
         v-for="error in form.errorBag.value.email"
         :key="error"
@@ -100,7 +100,7 @@ const login = form.handleSubmit(async (values) => {
         type="password"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
         placeholder="Password"
-      />
+      >
       <div
         v-for="error in form.errorBag.value.password"
         :key="error"

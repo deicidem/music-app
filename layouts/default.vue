@@ -1,13 +1,11 @@
 <script lang="ts" setup>
-import type { AuthModal } from "#build/components";
+import type { AuthModal } from '#build/components'
 </script>
 
 <template>
   <LayoutsDefault>
     <LayoutsDefaultHeader />
-
     <slot />
-
     <AuthModal />
   </LayoutsDefault>
 </template>

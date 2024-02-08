@@ -1,4 +1,4 @@
-export const useModalStore = defineStore("Modal", () => {
-  const isOpen = ref(false);
-  return { isOpen };
-});
+export const useModalStore = defineStore('Modal', () => {
+  const isOpen = ref(false)
+  return { isOpen }
+})

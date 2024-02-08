@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 definePageMeta({
-  name: "home",
-});
+  name: 'home'
+})
 </script>
 
 <template>
@@ -10,10 +10,12 @@ definePageMeta({
       <section class="mb-8 py-20 text-white text-center relative">
         <div
           class="absolute inset-0 w-full h-full bg-contain introduction-bg"
-        ></div>
+        />
         <div class="container mx-auto relative z-[1]">
           <div class="text-white main-header-content">
-            <h1 class="font-bold text-5xl mb-5">Listen to Great Music!</h1>
+            <h1 class="font-bold text-5xl mb-5">
+              Listen to Great Music!
+            </h1>
             <p class="w-full md:w-8/12 mx-auto">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
               et dolor mollis, congue augue non, venenatis elit. Nunc justo
@@ -26,7 +28,7 @@ definePageMeta({
         <img
           class="relative block mx-auto mt-5 -mb-20 w-auto max-w-full"
           src="~/assets/img/introduction-music.png"
-        />
+        >
       </section>
 
       <!-- Main Content -->
@@ -39,7 +41,7 @@ definePageMeta({
             <!-- Icon -->
             <i
               class="fa fa-headphones-alt float-right text-green-400 text-xl"
-            ></i>
+            />
           </div>
           <!-- Playlist -->
           <ol id="playlist">
@@ -53,7 +55,7 @@ definePageMeta({
 
               <div class="text-gray-600 text-lg">
                 <span class="comments">
-                  <i class="fa fa-comments text-gray-600"></i>
+                  <i class="fa fa-comments text-gray-600" />
                   15
                 </span>
               </div>
@@ -68,7 +70,7 @@ definePageMeta({
 
               <div class="text-gray-600 text-lg">
                 <span class="comments">
-                  <i class="fa fa-comments text-gray-600"></i>
+                  <i class="fa fa-comments text-gray-600" />
                   15
                 </span>
               </div>
@@ -83,7 +85,7 @@ definePageMeta({
 
               <div class="text-gray-600 text-lg">
                 <span class="comments">
-                  <i class="fa fa-comments text-gray-600"></i>
+                  <i class="fa fa-comments text-gray-600" />
                   15
                 </span>
               </div>
@@ -98,7 +100,7 @@ definePageMeta({
 
               <div class="text-gray-600 text-lg">
                 <span class="comments">
-                  <i class="fa fa-comments text-gray-600"></i>
+                  <i class="fa fa-comments text-gray-600" />
                   15
                 </span>
               </div>
@@ -113,7 +115,7 @@ definePageMeta({
 
               <div class="text-gray-600 text-lg">
                 <span class="comments">
-                  <i class="fa fa-comments text-gray-600"></i>
+                  <i class="fa fa-comments text-gray-600" />
                   15
                 </span>
               </div>
@@ -128,7 +130,7 @@ definePageMeta({
 
               <div class="text-gray-600 text-lg">
                 <span class="comments">
-                  <i class="fa fa-comments text-gray-600"></i>
+                  <i class="fa fa-comments text-gray-600" />
                   15
                 </span>
               </div>
@@ -143,7 +145,7 @@ definePageMeta({
 
               <div class="text-gray-600 text-lg">
                 <span class="comments">
-                  <i class="fa fa-comments text-gray-600"></i>
+                  <i class="fa fa-comments text-gray-600" />
                   15
                 </span>
               </div>
@@ -158,7 +160,7 @@ definePageMeta({
 
               <div class="text-gray-600 text-lg">
                 <span class="comments">
-                  <i class="fa fa-comments text-gray-600"></i>
+                  <i class="fa fa-comments text-gray-600" />
                   15
                 </span>
               </div>
@@ -173,7 +175,7 @@ definePageMeta({
 
               <div class="text-gray-600 text-lg">
                 <span class="comments">
-                  <i class="fa fa-comments text-gray-600"></i>
+                  <i class="fa fa-comments text-gray-600" />
                   15
                 </span>
               </div>
@@ -188,7 +190,7 @@ definePageMeta({
 
               <div class="text-gray-600 text-lg">
                 <span class="comments">
-                  <i class="fa fa-comments text-gray-600"></i>
+                  <i class="fa fa-comments text-gray-600" />
                   15
                 </span>
               </div>
@@ -203,7 +205,7 @@ definePageMeta({
 
               <div class="text-gray-600 text-lg">
                 <span class="comments">
-                  <i class="fa fa-comments text-gray-600"></i>
+                  <i class="fa fa-comments text-gray-600" />
                   15
                 </span>
               </div>
@@ -218,7 +220,7 @@ definePageMeta({
 
               <div class="text-gray-600 text-lg">
                 <span class="comments">
-                  <i class="fa fa-comments text-gray-600"></i>
+                  <i class="fa fa-comments text-gray-600" />
                   15
                 </span>
               </div>
@@ -233,7 +235,7 @@ definePageMeta({
 
               <div class="text-gray-600 text-lg">
                 <span class="comments">
-                  <i class="fa fa-comments text-gray-600"></i>
+                  <i class="fa fa-comments text-gray-600" />
                   15
                 </span>
               </div>
@@ -253,10 +255,12 @@ definePageMeta({
         <div class="flex flex-nowrap gap-4 items-center">
           <!-- Play/Pause Button -->
           <button type="button">
-            <i class="fa fa-play text-gray-500 text-xl"></i>
+            <i class="fa fa-play text-gray-500 text-xl" />
           </button>
           <!-- Current Position -->
-          <div class="player-currenttime">00:00</div>
+          <div class="player-currenttime">
+            00:00
+          </div>
           <!-- Scrub Container  -->
           <div class="w-full h-2 rounded bg-gray-200 relative cursor-pointer">
             <!-- Player Ball -->
@@ -264,16 +268,18 @@ definePageMeta({
               class="absolute -top-2.5 -ml-2.5 text-gray-800 text-lg"
               style="left: 50%"
             >
-              <i class="fas fa-circle"></i>
+              <i class="fas fa-circle" />
             </span>
             <!-- Player Progress Bar-->
             <span
               class="block h-2 rounded bg-gradient-to-r from-green-500 to-green-400"
               style="width: 50%"
-            ></span>
+            />
           </div>
           <!-- Duration -->
-          <div class="player-duration">03:06</div>
+          <div class="player-duration">
+            03:06
+          </div>
         </div>
       </div>
 
@@ -283,13 +289,11 @@ definePageMeta({
           class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
         >
           <div class="fixed inset-0 transition-opacity">
-            <div class="absolute inset-0 bg-gray-800 opacity-75"></div>
+            <div class="absolute inset-0 bg-gray-800 opacity-75" />
           </div>
 
           <!-- This element is to trick the browser into centering the modal contents. -->
-          <span class="hidden sm:inline-block sm:align-middle sm:h-screen"
-            >&#8203;</span
-          >
+          <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
 
           <div
             class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
@@ -298,10 +302,12 @@ definePageMeta({
             <div class="py-4 text-left px-6">
               <!--Title-->
               <div class="flex justify-between items-center pb-4">
-                <p class="text-2xl font-bold">Your Account</p>
+                <p class="text-2xl font-bold">
+                  Your Account
+                </p>
                 <!-- Modal Close Button -->
                 <div class="modal-close cursor-pointer z-50">
-                  <i class="fas fa-times"></i>
+                  <i class="fas fa-times" />
                 </div>
               </div>
 
@@ -311,13 +317,13 @@ definePageMeta({
                   <a
                     class="block rounded py-3 px-4 transition hover:text-white text-white bg-blue-600"
                     href="#"
-                    >Login</a
-                  >
+                  >Login</a>
                 </li>
                 <li class="flex-auto text-center">
-                  <a class="block rounded py-3 px-4 transition" href="#"
-                    >Register</a
-                  >
+                  <a
+                    class="block rounded py-3 px-4 transition"
+                    href="#"
+                  >Register</a>
                 </li>
               </ul>
 
@@ -330,7 +336,7 @@ definePageMeta({
                     type="email"
                     class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                     placeholder="Enter Email"
-                  />
+                  >
                 </div>
                 <!-- Password -->
                 <div class="mb-3">
@@ -339,7 +345,7 @@ definePageMeta({
                     type="password"
                     class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                     placeholder="Password"
-                  />
+                  >
                 </div>
                 <button
                   type="submit"
@@ -357,7 +363,7 @@ definePageMeta({
                     type="text"
                     class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                     placeholder="Enter Name"
-                  />
+                  >
                 </div>
                 <!-- Email -->
                 <div class="mb-3">
@@ -366,7 +372,7 @@ definePageMeta({
                     type="email"
                     class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                     placeholder="Enter Email"
-                  />
+                  >
                 </div>
                 <!-- Age -->
                 <div class="mb-3">
@@ -374,7 +380,7 @@ definePageMeta({
                   <input
                     type="number"
                     class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-                  />
+                  >
                 </div>
                 <!-- Password -->
                 <div class="mb-3">
@@ -383,7 +389,7 @@ definePageMeta({
                     type="password"
                     class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                     placeholder="Password"
-                  />
+                  >
                 </div>
                 <!-- Confirm Password -->
                 <div class="mb-3">
@@ -392,7 +398,7 @@ definePageMeta({
                     type="password"
                     class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                     placeholder="Confirm Password"
-                  />
+                  >
                 </div>
                 <!-- Country -->
                 <div class="mb-3">
@@ -400,9 +406,15 @@ definePageMeta({
                   <select
                     class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                   >
-                    <option value="USA">USA</option>
-                    <option value="Mexico">Mexico</option>
-                    <option value="Germany">Germany</option>
+                    <option value="USA">
+                      USA
+                    </option>
+                    <option value="Mexico">
+                      Mexico
+                    </option>
+                    <option value="Germany">
+                      Germany
+                    </option>
                   </select>
                 </div>
                 <!-- TOS -->
@@ -410,7 +422,7 @@ definePageMeta({
                   <input
                     type="checkbox"
                     class="w-4 h-4 float-left -ml-6 mt-1 rounded"
-                  />
+                  >
                   <label class="inline-block">Accept terms of service</label>
                 </div>
                 <button
