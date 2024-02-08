@@ -2,7 +2,6 @@
 definePageMeta({
   middleware: ["auth"],
   name: "manage",
-  requiresAuth: true,
 });
 </script>
 
