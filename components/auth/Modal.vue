@@ -86,12 +86,10 @@ const activeTabClass = computed(() => {
             </li>
           </ul>
 
-          <ModalAuthLogin v-if="activeTab === 'login'" />
-          <ModalAuthRegistration v-else />
+          <AuthLoginForm v-if="activeTab === 'login'" />
+          <AuthRegistrationForm v-else />
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped></style>

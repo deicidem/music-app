@@ -223,5 +223,3 @@ const register = form.handleSubmit(async (values) => {
     </button>
   </form>
 </template>
-
-<style lang="scss" scoped></style>

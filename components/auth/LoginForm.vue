@@ -119,5 +119,3 @@ const login = form.handleSubmit(async (values) => {
     {{}}
   </form>
 </template>
-
-<style lang="scss" scoped></style>

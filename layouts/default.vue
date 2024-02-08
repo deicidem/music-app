@@ -1,4 +1,6 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import type { AuthModal } from "#build/components";
+</script>
 
 <template>
   <LayoutsDefault>
@@ -6,7 +8,7 @@
 
     <slot />
 
-    <ModalAuth />
+    <AuthModal />
   </LayoutsDefault>
 </template>
 
