@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { z } from "zod"
+import { z } from "zod";
 
-const { register: createUser } = useUserStore()
+const { register: createUser } = useUserStore();
 const form = useForm({
 	validationSchema: toTypedSchema(
 		z.object({
@@ -28,7 +28,7 @@ const form = useForm({
 				})
 				.refine(
 					(data) => {
-						return data.password === data.passwordConfirmation
+						return data.password === data.passwordConfirmation;
 					},
 					{
 						message: "Passwords do not match",
@@ -41,18 +41,18 @@ const form = useForm({
 	initialValues: {
 		tos: true,
 	},
-})
+});
 
-const [name, nameAttrs] = form.defineField("name")
-const [email, emailAttrs] = form.defineField("email")
-const [age, ageAttrs] = form.defineField("age")
-const [password, passwordAttrs] = form.defineField("passwords.password")
+const [name, nameAttrs] = form.defineField("name");
+const [email, emailAttrs] = form.defineField("email");
+const [age, ageAttrs] = form.defineField("age");
+const [password, passwordAttrs] = form.defineField("passwords.password");
 
 const [passwordConfirmation, passwordConfirmationAttrs] = form.defineField(
 	"passwords.passwordConfirmation",
-)
-const [country, countryAttrs] = form.defineField("country")
-const [tos, tosAttrs] = form.defineField("tos")
+);
+const [country, countryAttrs] = form.defineField("country");
+const [tos, tosAttrs] = form.defineField("tos");
 
 enum AlertVariants {
 	BLUE = "bg-blue-500",
@@ -66,32 +66,32 @@ enum AlertMessages {
 	ERROR = "An error occurred. Please try again.",
 }
 
-const regInProgress = ref(false)
-const regShowAlert = ref(false)
-const regAlertVariant = ref(AlertVariants.BLUE)
-const regAlertMsg = ref(AlertMessages.WAIT)
+const regInProgress = ref(false);
+const regShowAlert = ref(false);
+const regAlertVariant = ref(AlertVariants.BLUE);
+const regAlertMsg = ref(AlertMessages.WAIT);
 
 const register = form.handleSubmit(async (values) => {
-	regShowAlert.value = true
-	regInProgress.value = true
-	regAlertVariant.value = AlertVariants.BLUE
-	regAlertMsg.value = AlertMessages.WAIT
+	regShowAlert.value = true;
+	regInProgress.value = true;
+	regAlertVariant.value = AlertVariants.BLUE;
+	regAlertMsg.value = AlertMessages.WAIT;
 
 	try {
-		await createUser(values)
+		await createUser(values);
 	}
 	catch (error) {
-		regInProgress.value = false
-		regAlertVariant.value = AlertVariants.RED
-		regAlertMsg.value = AlertMessages.ERROR
-		return
+		regInProgress.value = false;
+		regAlertVariant.value = AlertVariants.RED;
+		regAlertMsg.value = AlertMessages.ERROR;
+		return;
 	}
 
-	regInProgress.value = false
-	regAlertVariant.value = AlertVariants.GREEN
-	regAlertMsg.value = AlertMessages.SUCCESS
-	window.location.reload()
-})
+	regInProgress.value = false;
+	regAlertVariant.value = AlertVariants.GREEN;
+	regAlertMsg.value = AlertMessages.SUCCESS;
+	window.location.reload();
+});
 </script>
 
 <template>

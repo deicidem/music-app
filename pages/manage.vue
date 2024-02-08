@@ -2,7 +2,7 @@
 definePageMeta({
 	middleware: ["auth"],
 	name: "manage",
-})
+});
 </script>
 
 <template>

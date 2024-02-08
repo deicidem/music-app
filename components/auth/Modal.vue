@@ -1,19 +1,19 @@
 <script lang="ts" setup>
-const { isOpen } = storeToRefs(useModalStore())
+const { isOpen } = storeToRefs(useModalStore());
 function closeModal() {
-	isOpen.value = false
+	isOpen.value = false;
 }
 
-const target = ref<HTMLElement | null>(null)
+const target = ref<HTMLElement | null>(null);
 
 onClickOutside(target, () => {
-	closeModal()
-})
+	closeModal();
+});
 
-const activeTab = ref<"login" | "registration">("login")
+const activeTab = ref<"login" | "registration">("login");
 
 function activateTab(tab: "login" | "registration") {
-	activeTab.value = tab
+	activeTab.value = tab;
 }
 
 const activeTabClass = computed(() => {
@@ -27,8 +27,8 @@ const activeTabClass = computed(() => {
         activeTab.value === "registration",
 			"hover:text-blue-600": activeTab.value === "login",
 		},
-	}
-})
+	};
+});
 </script>
 
 <template>

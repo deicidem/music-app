@@ -1,4 +1,4 @@
-import { configure } from "vee-validate"
+import { configure } from "vee-validate";
 
 export default defineNuxtPlugin((_nuxtApp) => {
 	configure({
@@ -6,5 +6,5 @@ export default defineNuxtPlugin((_nuxtApp) => {
 		validateOnChange: true,
 		validateOnInput: false,
 		validateOnModelUpdate: true,
-	})
-})
+	});
+});

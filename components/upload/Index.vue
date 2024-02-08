@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 function onProgress(payload: any) {
-	console.log(payload)
+	console.log(payload);
 }
 </script>
 

@@ -86,4 +86,4 @@ export default defineNuxtConfig({
 	//   enabled: true, // Always enable purgecss
 	//   fontFace: true,
 	// },
-})
+});

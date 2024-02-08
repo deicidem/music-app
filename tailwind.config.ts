@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 export default <Partial<Config>>{
 	content: [
@@ -17,4 +17,4 @@ export default <Partial<Config>>{
 	},
 	plugins: [],
 	safelist: ["text-yellow-400"],
-}
+};

@@ -1,71 +1,73 @@
 <script lang="ts" setup>
-import { ref as storageRef } from "firebase/storage"
-import type { ProgressState } from "./Progress.vue"
-import { type SongCreateData, useSongsStore } from "~/stores/songs"
+import { ref as storageRef } from "firebase/storage";
+import type { ProgressState } from "./Progress.vue";
+import { type SongCreateData, useSongsStore } from "~/stores/songs";
 
 interface Upload {
-	title: string
-	progress: number
-	progressState: ProgressState
+	title: string;
+	progress: number;
+	progressState: ProgressState;
 }
 
-const isDragOver = ref(false)
-const storage = useFirebaseStorage()
-const uploads = ref<Upload[]>([])
-const user = useCurrentUser()!
-const { addSong } = useSongsStore()
+const isDragOver = ref(false);
+const storage = useFirebaseStorage();
+const uploads = ref<Upload[]>([]);
+const user = useCurrentUser()!;
+const { addSong } = useSongsStore();
+
 function startDrag() {
 	if (!isDragOver.value) {
-		console.log("dragStart")
-		isDragOver.value = true
+		console.log("dragStart");
+		isDragOver.value = true;
 	}
 }
 
 function endDrag() {
 	if (isDragOver.value) {
-		console.log("dragEnd")
-		isDragOver.value = false
+		console.log("dragEnd");
+		isDragOver.value = false;
 	}
 }
 
 function upload(event: DragEvent) {
-	endDrag()
+	endDrag();
+
 	if (event.dataTransfer) {
-		const files = [...event.dataTransfer?.files]
+		const files = [...event.dataTransfer?.files];
 
 		files.forEach((file) => {
 			if (file.type !== "audio/mpeg")
-				return
+				return;
 
-			const songRef = storageRef(storage, `songs/${file.name}`)
-			const { upload, uploadProgress, uploadTask, url } = useStorageFile(songRef)
+			const songRef = storageRef(storage, `songs/${file.name}`);
+			const { upload, uploadProgress, uploadTask, url } = useStorageFile(songRef);
 
-			upload(file)
+			upload(file);
 
 			const uploadState = ref<Upload>({
 				title: file.name,
 				progress: uploadProgress.value ?? 0,
 				progressState: "PROGRESS",
-			})
+			});
 
-			uploads.value.push(uploadState.value)
+			uploads.value.push(uploadState.value);
 
 			if (uploadTask.value == null || user.value == null)
-				return
+				return;
 
 			uploadTask.value.on(
 				"state_changed",
 				() => {
 					if (uploadProgress.value != null)
-						uploadState.value.progress = uploadProgress.value * 100
+						uploadState.value.progress = uploadProgress.value * 100;
 				},
 				(error) => {
-					console.log(error)
-					uploadState.value.progressState = "ERROR"
+					console.log(error);
+					uploadState.value.progressState = "ERROR";
 				},
 				async () => {
 					if (!uploadTask.value || !user.value)
-						return
+						return;
 
 					const song: SongCreateData = {
 						uid: user.value.uid,
@@ -75,15 +77,15 @@ function upload(event: DragEvent) {
 						genre: "",
 						commentCount: 0,
 						url: url.value ?? "",
-					}
+					};
 
-					const res = await addSong(song)
-					console.log(res)
+					const res = await addSong(song);
+					console.log(res);
 
-					uploadState.value.progressState = "SUCCESS"
+					uploadState.value.progressState = "SUCCESS";
 				},
-			)
-		})
+			);
+		});
 	}
 }
 </script>

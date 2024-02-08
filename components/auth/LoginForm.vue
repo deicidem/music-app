@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { z } from "zod"
+import { z } from "zod";
 
-const { authenticate } = useUserStore()
+const { authenticate } = useUserStore();
 
 const form = useForm({
 	validationSchema: toTypedSchema(
@@ -18,9 +18,9 @@ const form = useForm({
 				),
 		}),
 	),
-})
-const [email, emailAttrs] = form.defineField("email")
-const [password, passwordAttrs] = form.defineField("password")
+});
+const [email, emailAttrs] = form.defineField("email");
+const [password, passwordAttrs] = form.defineField("password");
 
 enum AlertVariants {
 	BLUE = "bg-blue-500",
@@ -34,33 +34,33 @@ enum AlertMessages {
 	ERROR = "Invalid email or password. Please try again.",
 }
 
-const loginInProgress = ref(false)
-const loginShowAlert = ref(false)
-const loginAlertVariant = ref(AlertVariants.BLUE)
-const loginAlertMsg = ref(AlertMessages.WAIT)
+const loginInProgress = ref(false);
+const loginShowAlert = ref(false);
+const loginAlertVariant = ref(AlertVariants.BLUE);
+const loginAlertMsg = ref(AlertMessages.WAIT);
 
 const login = form.handleSubmit(async (values) => {
-	loginShowAlert.value = true
-	loginInProgress.value = true
-	loginAlertVariant.value = AlertVariants.BLUE
-	loginAlertMsg.value = AlertMessages.WAIT
+	loginShowAlert.value = true;
+	loginInProgress.value = true;
+	loginAlertVariant.value = AlertVariants.BLUE;
+	loginAlertMsg.value = AlertMessages.WAIT;
 
 	try {
-		await authenticate(values)
+		await authenticate(values);
 	}
 	catch (error) {
-		loginShowAlert.value = true
-		loginInProgress.value = false
-		loginAlertVariant.value = AlertVariants.RED
-		loginAlertMsg.value = AlertMessages.ERROR
-		return
+		loginShowAlert.value = true;
+		loginInProgress.value = false;
+		loginAlertVariant.value = AlertVariants.RED;
+		loginAlertMsg.value = AlertMessages.ERROR;
+		return;
 	}
 
-	loginAlertVariant.value = AlertVariants.GREEN
-	loginAlertMsg.value = AlertMessages.SUCCESS
-	loginInProgress.value = false
-	window.location.reload()
-})
+	loginAlertVariant.value = AlertVariants.GREEN;
+	loginAlertMsg.value = AlertMessages.SUCCESS;
+	loginInProgress.value = false;
+	window.location.reload();
+});
 </script>
 
 <template>

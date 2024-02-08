@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-const { isOpen } = storeToRefs(useModalStore())
-const { userLoggedIn } = storeToRefs(useUserStore())
-const { logOut } = useUserStore()
+const { isOpen } = storeToRefs(useModalStore());
+const { userLoggedIn } = storeToRefs(useUserStore());
+const { logOut } = useUserStore();
 function toggleAuthModal() {
-	isOpen.value = !isOpen.value
+	isOpen.value = !isOpen.value;
 }
 
 async function signOut() {
-	await logOut()
-	useRouter().push({ name: "home" })
+	await logOut();
+	useRouter().push({ name: "home" });
 }
 </script>
 

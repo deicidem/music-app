@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-export type ProgressState = "SUCCESS" | "ERROR" | "PROGRESS"
+export type ProgressState = "SUCCESS" | "ERROR" | "PROGRESS";
 
 const props = defineProps<{
-	title: string
-	progress: number
-	condition: ProgressState
-}>()
+	title: string;
+	progress: number;
+	condition: ProgressState;
+}>();
 
 enum BarVariants {
 	SUCCESS = "bg-green-400",
@@ -26,16 +26,16 @@ enum TextVariants {
 }
 
 const currentProgressStyle = computed(() => {
-	return `width: ${props.progress >= 0 ? (props.progress <= 100 ? props.progress : 100) : 0}%`
-})
+	return `width: ${props.progress >= 0 ? (props.progress <= 100 ? props.progress : 100) : 0}%`;
+});
 
 const classes = computed(() => {
 	return {
 		bar: BarVariants[props.condition],
 		icon: IconVariants[props.condition],
 		text: TextVariants[props.condition],
-	}
-})
+	};
+});
 </script>
 
 <template>
