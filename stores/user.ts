@@ -39,18 +39,8 @@ type UserCreateData = {
 
 export const useUserStore = defineStore("User", () => {
   const auth = useFirebaseAuth()!;
-  const store = useFirestore();
-  const usersCollection = collection(store, "users");
-  const user = useCurrentUser();
-  const userLoggedIn = ref(false);
 
-  watch(
-    () => user.value,
-    () => {
-      console.log("watch", user.value);
-      userLoggedIn.value = user.value != null;
-    },
-  );
+  const userLoggedIn = ref<boolean | null>(null);
 
   const createUser = async (email: string, password: string) => {
     const userCredential = await createUserWithEmailAndPassword(
@@ -62,6 +52,9 @@ export const useUserStore = defineStore("User", () => {
   };
 
   const addUser = async (uid: string, user: UserCreateData) => {
+    const store = useFirestore();
+    const usersCollection = collection(store, "users");
+
     return await setDoc(doc(usersCollection, uid), user);
   };
 
@@ -85,6 +78,7 @@ export const useUserStore = defineStore("User", () => {
 
   const logOut = async () => {
     await signOut(auth);
+    userLoggedIn.value = false;
   };
 
   return { userLoggedIn, register, authenticate, logOut };

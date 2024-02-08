@@ -16,4 +16,5 @@ export default <Partial<Config>>{
     extend: {},
   },
   plugins: [],
+  safelist: ["text-yellow-400"],
 };

@@ -1,5 +1,5 @@
 {
   "files.eol": "\n",
   "typescript.tsdk": "node_modules/typescript/lib",
-  "remote.autoForwardPortsFallback": 0
+  "remote.autoForwardPortsFallback": 0,
 }

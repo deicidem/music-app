@@ -5,13 +5,24 @@ const { logOut } = useUserStore();
 const toggleAuthModal = () => {
   isOpen.value = !isOpen.value;
 };
+
+const signOut = async () => {
+  await logOut();
+  useRouter().push({ name: "home" });
+};
 </script>
 
 <template>
   <header id="header" class="bg-gray-700">
     <nav class="container mx-auto flex justify-start items-center py-5 px-4">
       <!-- App Name -->
-      <a class="text-white font-bold uppercase text-2xl mr-4" href="#">Music</a>
+      <NuxtLink
+        class="text-white font-bold uppercase text-2xl mr-4"
+        :exact-active-class="'no-active'"
+        :to="{ name: 'home' }"
+      >
+        Music
+      </NuxtLink>
 
       <div class="flex flex-grow items-center">
         <!-- Primary Navigation -->
@@ -24,12 +35,14 @@ const toggleAuthModal = () => {
           </li>
           <template v-else>
             <li>
-              <a class="px-2 text-white" href="#" @click.prevent="logOut"
+              <a class="px-2 text-white" href="#" @click.prevent="signOut"
                 >Logout</a
               >
             </li>
             <li>
-              <a class="px-2 text-white" href="#">Manage</a>
+              <NuxtLink class="px-2 text-white" :to="{ name: 'manage' }"
+                >Manage</NuxtLink
+              >
             </li>
           </template>
         </ul>

@@ -62,6 +62,17 @@ export default defineNuxtConfig({
       sessionCookie: true,
     },
   },
+  experimental: {
+    defaults: {
+      nuxtLink: {
+        exactActiveClass: "text-yellow-400",
+      },
+    },
+  },
+  sourcemap: {
+    server: true,
+    client: true,
+  },
   // postcss: {
   //   plugins: {
   //     cssnano: {

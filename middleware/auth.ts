@@ -1,8 +1,7 @@
-export default defineNuxtRouteMiddleware(async () => {
-  const user = await getCurrentUser();
+export default defineNuxtRouteMiddleware((to) => {
   const { userLoggedIn } = storeToRefs(useUserStore());
 
-  if (user) {
-    userLoggedIn.value = true;
+  if (!userLoggedIn.value && to.meta.requiresAuth) {
+    return navigateTo({ name: "home" });
   }
 });
