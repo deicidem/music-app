@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { AuthModal } from "#build/components";
 </script>
 
 <template>

@@ -2,6 +2,7 @@ import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 	signOut,
+	updateProfile,
 } from "firebase/auth";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { defineStore } from "pinia";
@@ -69,6 +70,10 @@ export const useUserStore = defineStore("User", () => {
 			email: values.email,
 			age: values.age,
 			country: values.country,
+		});
+
+		updateProfile(userCredentials.user, {
+			displayName: values.name,
 		});
 	};
 
