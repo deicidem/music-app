@@ -29,11 +29,11 @@ const alertMsg = ref(AlertMessages.WAIT);
 const form = useForm({
 	validationSchema: toTypedSchema(object({
 		modifiedName: string().min(3).max(100),
-		genre: string().min(3).max(100).nullable(),
+		genre: string().min(3).max(100).optional(),
 	})),
 	initialValues: {
 		modifiedName: props.song.modifiedName,
-		genre: props.song.genre,
+		genre: props.song.genre ?? null,
 	},
 });
 
@@ -67,6 +67,35 @@ const handleSubmit = form.handleSubmit(async (values) => {
 	inProgress.value = false;
 	alertVariant.value = AlertVariants.GREEN;
 	alertMsg.value = AlertMessages.SUCCESS;
+
+	setHaveUnsavedChanges(false);
+});
+
+function goBack() {
+	emit("close");
+}
+const addUnsavedChange = inject<Function>("addUnsavedChange");
+const removeUnsavedChange = inject<Function>("removeUnsavedChange");
+
+function setHaveUnsavedChanges(value: boolean) {
+	if (addUnsavedChange && removeUnsavedChange) {
+		if (value)
+			addUnsavedChange(props.song.id);
+		else
+			removeUnsavedChange(props.song.id);
+	}
+}
+
+watchEffect(() => {
+	if (modifiedName.value === props.song.modifiedName
+		&& genre.value === props.song.genre
+	) setHaveUnsavedChanges(false);
+	else
+		setHaveUnsavedChanges(true);
+});
+
+onBeforeUnmount(() => {
+	setHaveUnsavedChanges(false);
 });
 </script>
 
@@ -112,7 +141,7 @@ const handleSubmit = form.handleSubmit(async (values) => {
 			type="button"
 			class="py-1.5 px-3 rounded text-white bg-gray-600"
 			:disabled="inProgress"
-			@click.prevent="emit('close')"
+			@click.prevent="goBack"
 		>
 			Go Back
 		</button>
