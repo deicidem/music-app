@@ -2,20 +2,6 @@ import { type FirestoreDataConverter, addDoc, collection, deleteDoc, doc, getDoc
 import { deleteObject, ref as storageRef } from "firebase/storage";
 import { defineStore } from "pinia";
 
-export interface Song {
-	uid: string;
-	displayName: string;
-	originalName: string;
-	modifiedName: string;
-	genre: string;
-	commentCount: number;
-	url: string;
-}
-
-export interface SongWithId extends Song {
-	id: string;
-}
-
 export const useSongsManagerStore = defineStore("SongsManager", () => {
 	// const songs = useCollection<Song>(collection(useFirestore(), "songs").withConverter<Song>({
 	// 	toFirestore: data => data,

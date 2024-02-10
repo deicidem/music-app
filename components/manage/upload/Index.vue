@@ -10,6 +10,6 @@ function onProgress(payload: any) {
 			<span class="card-title">Upload</span>
 			<i class="fas fa-upload float-right text-green-400 text-2xl" />
 		</div>
-		<UploadDropbox :progress="onProgress" />
+		<ManageUploadDropbox :progress="onProgress" />
 	</div>
 </template>

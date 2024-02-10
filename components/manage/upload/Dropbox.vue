@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { type UploadTask, ref as storageRef } from "firebase/storage";
 import type { ProgressState } from "./Progress.vue";
-import { type Song, useSongsManagerStore } from "~/stores/songsManger";
 
 interface Upload {
 	task: UploadTask;
@@ -135,7 +134,7 @@ onBeforeUnmount(() => {
 			No current uploads
 		</div>
 		<!-- Progess Bars -->
-		<UploadProgress
+		<ManageUploadProgress
 			v-for="upld in uploads"
 			:key="upld.title"
 			:progress="upld.progress"

@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import type { SongWithId } from "~/stores/songsManger";
-
 const props = defineProps<{
 	song: SongWithId;
 }>();
@@ -32,6 +30,6 @@ const { deleteSong } = useSongsManagerStore();
 				<i class="fa fa-pencil-alt" />
 			</button>
 		</div>
-		<SongsListItemForm v-if="showForm" :song="props.song" @close="showForm = false" />
+		<ManageSongsListItemForm v-if="showForm" :song="props.song" @close="showForm = false" />
 	</div>
 </template>

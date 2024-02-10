@@ -35,10 +35,10 @@ onBeforeRouteLeave((to, from, next) => {
 			<section class="container mx-auto mt-6">
 				<div class="md:grid md:grid-cols-3 md:gap-4">
 					<div class="col-span-1">
-						<Upload />
+						<ManageUpload />
 					</div>
 					<div class="col-span-2">
-						<Songs />
+						<ManageSongs />
 					</div>
 				</div>
 			</section>

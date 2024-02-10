@@ -13,6 +13,6 @@
 			/>
 		</div>
 
-		<SongsList />
+		<ManageSongsList />
 	</div>
 </template>

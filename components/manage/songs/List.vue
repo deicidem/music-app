@@ -6,6 +6,6 @@ await useAsyncData("songs", () => fetchSongs());
 
 <template>
 	<div class="p-6">
-		<SongsListItem v-for="song in songs" :key="song.id" :song="song" />
+		<ManageSongsListItem v-for="song in songs" :key="song.id" :song="song" />
 	</div>
 </template>
