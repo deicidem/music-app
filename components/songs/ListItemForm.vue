@@ -40,7 +40,7 @@ const form = useForm({
 const [modifiedName, modifiedNameAttrs] = form.defineField("modifiedName");
 const [genre, genreAttrs] = form.defineField("genre");
 
-const { updateSong } = useSongsStore();
+const { updateSong } = useSongsManagerStore();
 
 const handleSubmit = form.handleSubmit(async (values) => {
 	inProgress.value = true;

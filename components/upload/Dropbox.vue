@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { type UploadTask, ref as storageRef } from "firebase/storage";
 import type { ProgressState } from "./Progress.vue";
-import { type Song, useSongsStore } from "~/stores/songs";
+import { type Song, useSongsManagerStore } from "~/stores/songsManger";
 
 interface Upload {
 	task: UploadTask;
@@ -14,7 +14,7 @@ const isDragOver = ref(false);
 const storage = useFirebaseStorage();
 const uploads = ref<Upload[]>([]);
 const user = useCurrentUser()!;
-const { addSong } = useSongsStore();
+const { addSong } = useSongsManagerStore();
 
 function startDrag() {
 	if (!isDragOver.value) {

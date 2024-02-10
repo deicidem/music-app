@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { SongWithId } from "~/stores/songs";
+import type { SongWithId } from "~/stores/songsManger";
 
 const props = defineProps<{
 	song: SongWithId;
@@ -10,7 +10,7 @@ function toggleForm() {
 	showForm.value = !showForm.value;
 }
 
-const { deleteSong } = useSongsStore();
+const { deleteSong } = useSongsManagerStore();
 </script>
 
 <template>

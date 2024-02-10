@@ -16,7 +16,7 @@ export interface SongWithId extends Song {
 	id: string;
 }
 
-export const useSongsStore = defineStore("Songs", () => {
+export const useSongsManagerStore = defineStore("SongsManager", () => {
 	// const songs = useCollection<Song>(collection(useFirestore(), "songs").withConverter<Song>({
 	// 	toFirestore: data => data,
 	// 	fromFirestore: (snapshot) => {

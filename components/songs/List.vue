@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-const { songs } = storeToRefs(useSongsStore());
-const { fetchSongs } = useSongsStore();
+const { songs } = storeToRefs(useSongsManagerStore());
+const { fetchSongs } = useSongsManagerStore();
 await useAsyncData("songs", () => fetchSongs());
 </script>
 
