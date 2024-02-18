@@ -1,7 +1,7 @@
 import { type FirestoreDataConverter, collection, getDocs } from "firebase/firestore";
 import { defineStore } from "pinia";
 
-export const useSongsStore = defineStore("Songs", () => {
+export const usePlaylistStore = defineStore("Playlist", () => {
 	const songs = ref<SongWithId[]>([]);
 
 	const songConverter: FirestoreDataConverter<SongWithId> = {
