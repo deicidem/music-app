@@ -1,33 +1,26 @@
-import { type FirestoreDataConverter, collection, getDocs } from "firebase/firestore";
+import { doc, getDoc, getDocs, limit, orderBy, query, startAfter } from "firebase/firestore";
 import { defineStore } from "pinia";
 
 export const usePlaylistStore = defineStore("Playlist", () => {
 	const songs = ref<SongWithId[]>([]);
-
-	const songConverter: FirestoreDataConverter<SongWithId> = {
-		toFirestore: data => data,
-		fromFirestore: (snapshot) => {
-			const data = snapshot.data() as SongWithId;
-			return {
-				uid: data.uid,
-				displayName: data.displayName,
-				originalName: data.originalName,
-				modifiedName: data.modifiedName,
-				genre: data.genre,
-				commentCount: data.commentCount,
-				url: data.url,
-				id: snapshot.id,
-			};
-		},
-	};
+	const maxPerPage = ref(1);
 
 	async function fetchSongs() {
-		const store = useFirestore();
-		const songsCollection = collection(store, "songs").withConverter<SongWithId>(songConverter);
-		const querySnapshot = await getDocs(songsCollection);
+		const songsCollection = useSongsCollection();
+		const q = query(songsCollection, orderBy("modifiedName"), limit(maxPerPage.value));
+		const querySnapshot = await getDocs(q);
 
 		songs.value = querySnapshot.docs.map(doc => doc.data());
 	}
 
-	return { songs, fetchSongs };
+	async function fetchNextSongs() {
+		const songsCollection = useSongsCollection();
+		const lastDoc = await getDoc(doc(songsCollection, songs.value[songs.value.length - 1].id));
+		const q = query(songsCollection, orderBy("modifiedName"), startAfter(lastDoc), limit(maxPerPage.value));
+		const querySnapshot = await getDocs(q);
+
+		querySnapshot.forEach(doc => songs.value.push(doc.data()));
+	}
+
+	return { songs, fetchSongs, fetchNextSongs, maxPerPage };
 });

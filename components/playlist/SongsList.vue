@@ -1,7 +1,23 @@
 <script lang="ts" setup>
 const { songs } = storeToRefs(usePlaylistStore());
-const { fetchSongs } = usePlaylistStore();
-await useAsyncData("songs", () => fetchSongs());
+const { fetchSongs, fetchNextSongs } = usePlaylistStore();
+const fetchingNextSongs = ref(false);
+async function getSongs() {
+	if (fetchingNextSongs.value)
+		return;
+
+	fetchingNextSongs.value = true;
+	if (songs.value.length)
+		await fetchNextSongs();
+	else
+		await fetchSongs();
+
+	fetchingNextSongs.value = false;
+}
+
+await useAsyncData("songs", () => getSongs());
+
+useInfiniteScrollAsync(getSongs);
 </script>
 
 <template>
