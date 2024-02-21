@@ -14,8 +14,8 @@ async function getSongs() {
 
 	fetchingNextSongs.value = false;
 }
-
-await useAsyncData("songs", () => getSongs());
+if (songs.value.length === 0)
+	await useAsyncData("songs", () => getSongs());
 
 useInfiniteScrollAsync(getSongs);
 </script>

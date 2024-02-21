@@ -9,8 +9,10 @@ export const usePlaylistStore = defineStore("Playlist", () => {
 		const songsCollection = useSongsCollection();
 		const q = query(songsCollection, orderBy("modifiedName"), limit(maxPerPage.value));
 		const querySnapshot = await getDocs(q);
+		console.log("fetchSongs");
 
 		songs.value = querySnapshot.docs.map(doc => doc.data());
+		return songs.value;
 	}
 
 	async function fetchNextSongs() {
@@ -20,7 +22,14 @@ export const usePlaylistStore = defineStore("Playlist", () => {
 		const querySnapshot = await getDocs(q);
 
 		querySnapshot.forEach(doc => songs.value.push(doc.data()));
+		return songs.value;
 	}
 
-	return { songs, fetchSongs, fetchNextSongs, maxPerPage };
+	async function fetchSongById(id: string) {
+		const songsCollection = useSongsCollection();
+		const docRef = doc(songsCollection, id);
+		return (await getDoc(docRef)).data();
+	};
+
+	return { songs, fetchSongs, fetchNextSongs, maxPerPage, fetchSongById };
 });

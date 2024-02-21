@@ -1,48 +1,13 @@
-import { type FirestoreDataConverter, addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from "firebase/firestore";
+import { addDoc, deleteDoc, doc, getDocs, query, setDoc, where } from "firebase/firestore";
 import { deleteObject, ref as storageRef } from "firebase/storage";
 import { defineStore } from "pinia";
 
 export const useSongsManagerStore = defineStore("SongsManager", () => {
-	// const songs = useCollection<Song>(collection(useFirestore(), "songs").withConverter<Song>({
-	// 	toFirestore: data => data,
-	// 	fromFirestore: (snapshot) => {
-	// 		const data = snapshot.data() as Song;
-	// 		return {
-	// 			uid: snapshot.id,
-	// 			displayName: data.displayName,
-	// 			originalName: data.originalName,
-	// 			modifiedName: data.modifiedName,
-	// 			genre: data.genre,
-	// 			commentCount: data.commentCount,
-	// 			url: data.url,
-	// 		};
-	// 	},
-	// }));
-
 	const songs = ref<SongWithId[]>([]);
 
-	const songConverter: FirestoreDataConverter<SongWithId> = {
-		toFirestore: data => data,
-		fromFirestore: (snapshot) => {
-			const data = snapshot.data() as SongWithId;
-			return {
-				uid: data.uid,
-				displayName: data.displayName,
-				originalName: data.originalName,
-				modifiedName: data.modifiedName,
-				genre: data.genre,
-				commentCount: data.commentCount,
-				url: data.url,
-				id: snapshot.id,
-			};
-		},
-	};
-
 	async function fetchSongs() {
-		const store = useFirestore();
 		const user = useCurrentUser();
-
-		const songsCollection = collection(store, "songs").withConverter<SongWithId>(songConverter);
+		const songsCollection = useSongsCollection();
 
 		const q = query(songsCollection, where("uid", "==", user.value?.uid));
 		const querySnapshot = await getDocs(q);
@@ -51,18 +16,16 @@ export const useSongsManagerStore = defineStore("SongsManager", () => {
 	}
 
 	async function addSong(song: Song) {
-		const store = useFirestore();
-		const songsCollection = collection(store, "songs");
+		const songsCollection = useSongsCollection();
 
-		const res = (await addDoc(songsCollection, song)).withConverter<SongWithId>(songConverter);
+		const res = await addDoc(songsCollection, song);
 		songs.value.push({ id: res.id, ...song });
 
 		return res;
 	}
 
 	async function updateSong(id: string, song: Song) {
-		const store = useFirestore();
-		const songsCollection = collection(store, "songs");
+		const songsCollection = useSongsCollection();
 
 		const res = await setDoc(doc(songsCollection, id), song);
 
@@ -78,8 +41,7 @@ export const useSongsManagerStore = defineStore("SongsManager", () => {
 	}
 
 	async function deleteSong(song: SongWithId) {
-		const store = useFirestore();
-		const songsCollection = collection(store, "users");
+		const songsCollection = useSongsCollection();
 		const storage = useFirebaseStorage();
 		const songRef = storageRef(storage, `songs/${song.originalName}`);
 

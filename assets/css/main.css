@@ -24,6 +24,7 @@ a:hover {
   z-index: 0;
 }
 
+
 #playlist li:first-child {
   padding-top: 25px;
 }
@@ -57,6 +58,7 @@ input[type="file"] {
 .music-bg {
   animation: slide 50s linear infinite;
   will-change: background-position;
+	background-image: url("~/assets/img/song-header.png");
 }
 
 @keyframes progress-bar-stripes {

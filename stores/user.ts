@@ -72,7 +72,7 @@ export const useUserStore = defineStore("User", () => {
 			country: values.country,
 		});
 
-		updateProfile(userCredentials.user, {
+		await updateProfile(userCredentials.user, {
 			displayName: values.name,
 		});
 	};

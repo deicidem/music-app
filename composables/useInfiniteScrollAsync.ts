@@ -1,4 +1,4 @@
-export function useInfiniteScrollAsync<T = void>(action: () => Promise<T>) {
+export function useInfiniteScrollAsync(action: () => Promise<any>) {
 	async function handleScroll() {
 		const { scrollTop, offsetHeight } = document.documentElement;
 		const { innerHeight } = window;
