@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 export const usePlaylistStore = defineStore('Playlist', () => {
   const songs = ref<SongWithId[]>([])
-  const maxPerPage = ref(1)
+  const maxPerPage = ref(4)
 
   async function fetchSongs() {
     const repository = useSongsRepository()

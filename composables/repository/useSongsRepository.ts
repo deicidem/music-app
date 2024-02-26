@@ -12,7 +12,6 @@ export function useSongsRepository() {
   async function get(params?: Get) {
     const songsCollection = useSongsCollection()
     let q = query(songsCollection)
-    console.log(params)
 
     if (params) {
       if (params.userId)
@@ -23,9 +22,11 @@ export function useSongsRepository() {
 
       if (params.orderBy)
         q = query(q, orderBy(params.orderBy))
-
-      if (params.startAfter)
-        q = query(q, startAfter(params.startAfter))
+      if (params.startAfter) {
+        const docRef = doc(songsCollection, params.startAfter.id)
+        const docSnap = await getDoc(docRef)
+        q = query(q, startAfter(docSnap))
+      }
     }
 
     const querySnapshot = await getDocs(q)

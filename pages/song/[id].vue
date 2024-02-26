@@ -24,7 +24,7 @@ if (!song.value)
       <template v-if="song">
         <SongBanner :song="song" />
 
-        <section class="container mx-auto mt-6">
+        <section id="comments" class="container mx-auto mt-6">
           <div
             class="bg-white rounded border border-gray-200 relative flex flex-col"
           >

@@ -16,10 +16,12 @@ defineProps<{
     </div>
 
     <div class="text-gray-600 text-lg">
-      <span class="comments">
-        <i class="fa fa-comments text-gray-600" />
-        {{ song.commentCount }}
-      </span>
+      <NuxtLink v-slot="{ navigate }" custom :to="{ name: 'song', params: { id: song.id }, hash: '#comments' }">
+        <span class="comments" @click="navigate">
+          <i class="fa fa-comments text-gray-600" />
+          {{ song.commentCount }}
+        </span>
+      </NuxtLink>
     </div>
   </li>
 </template>

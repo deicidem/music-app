@@ -2,7 +2,7 @@ export function useInfiniteScrollAsync(action: () => Promise<any>) {
   async function handleScroll() {
     const { scrollTop, offsetHeight } = document.documentElement
     const { innerHeight } = window
-    const bottomOfWindow = Math.round(scrollTop) + innerHeight === offsetHeight
+    const bottomOfWindow = (Math.round(scrollTop) + innerHeight + 10) >= offsetHeight
     if (bottomOfWindow)
       await action()
   }
