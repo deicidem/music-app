@@ -6,6 +6,7 @@
     <LayoutsDefaultHeader />
     <slot />
     <AuthModal />
+    <Player />
   </LayoutsDefault>
 </template>
 

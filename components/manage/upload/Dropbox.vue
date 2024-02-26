@@ -48,56 +48,61 @@ function onFileInput(event: Event) {
 
 function upload(files: File[]) {
   files.forEach((file) => {
-    if (file.type !== 'audio/mpeg')
-      return
+    try {
+      if (file.type !== 'audio/mpeg')
+        return
 
-    const songRef = storageRef(storage, `songs/${file.name}`)
-    const { upload, uploadProgress, uploadTask, url } = useStorageFile(songRef)
+      const songRef = storageRef(storage, `songs/${file.name}`)
+      const { upload: load, uploadProgress, uploadTask, url } = useStorageFile(songRef)
 
-    upload(file)
+      load(file)
 
-    if (uploadTask.value == null || user.value == null)
-      return
+      if (uploadTask.value == null || user.value == null)
+        return
 
-    const uploadState = ref<Upload>({
-      task: uploadTask.value,
-      title: file.name,
-      progress: uploadProgress.value ?? 0,
-      progressState: 'PROGRESS',
-    })
+      const uploadState = ref<Upload>({
+        task: uploadTask.value,
+        title: file.name,
+        progress: uploadProgress.value ?? 0,
+        progressState: 'PROGRESS',
+      })
 
-    uploads.value.push(uploadState.value)
+      uploads.value.push(uploadState.value)
 
-    uploadTask.value.on(
-      'state_changed',
-      () => {
-        if (uploadProgress.value != null)
-          uploadState.value.progress = uploadProgress.value * 100
-      },
-      (error) => {
-        console.log(error)
-        uploadState.value.progressState = 'ERROR'
-      },
-      async () => {
-        if (!uploadTask.value || !user.value)
-          return
+      uploadTask.value.on(
+        'state_changed',
+        () => {
+          if (uploadProgress.value != null)
+            uploadState.value.progress = uploadProgress.value * 100
+        },
+        (error) => {
+          console.log(error)
+          uploadState.value.progressState = 'ERROR'
+        },
+        async () => {
+          if (!uploadTask.value || !user.value)
+            return
 
-        const song: Song = {
-          uid: user.value.uid,
-          displayName: user.value.displayName ?? '',
-          originalName: uploadTask.value.snapshot.ref.name,
-          modifiedName: uploadTask.value.snapshot.ref.name,
-          genre: '',
-          commentCount: 0,
-          url: url.value ?? '',
-        }
+          const song: Song = {
+            uid: user.value.uid,
+            displayName: user.value.displayName ?? '',
+            originalName: uploadTask.value.snapshot.ref.name,
+            modifiedName: uploadTask.value.snapshot.ref.name,
+            genre: '',
+            commentCount: 0,
+            url: url.value ?? '',
+          }
 
-        const res = await addSong(song)
-        console.log(res)
+          const res = await addSong(song)
+          console.log(res)
 
-        uploadState.value.progressState = 'SUCCESS'
-      },
-    )
+          uploadState.value.progressState = 'SUCCESS'
+        },
+      )
+    }
+    catch (error) {
+      console.log(error)
+    }
   })
 }
 

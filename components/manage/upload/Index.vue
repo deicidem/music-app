@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-function onProgress(payload: any) {
-  console.log(payload)
-}
 </script>
 
 <template>
@@ -10,6 +7,6 @@ function onProgress(payload: any) {
       <span class="card-title">Upload</span>
       <i class="fas fa-upload float-right text-green-400 text-2xl" />
     </div>
-    <ManageUploadDropbox :progress="onProgress" />
+    <ManageUploadDropbox />
   </div>
 </template>

@@ -6,15 +6,18 @@ export const useSongsManagerStore = defineStore('SongsManager', () => {
   async function fetchSongs() {
     const user = useCurrentUser()
     const repository = useSongsRepository()
-
-    const res = await repository.get(
-      {
-        orderBy: 'modifiedName',
-        userId: user.value?.uid,
-      },
-    )
-
-    songs.value = res
+    try {
+      const res = await repository.get(
+        {
+          orderBy: 'modifiedName',
+          userId: user.value?.uid,
+        },
+      )
+      songs.value = res
+    }
+    catch (error) {
+      console.log(error)
+    }
   }
 
   async function addSong(song: Song) {

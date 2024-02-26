@@ -1,4 +1,4 @@
-import { addDoc, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, setDoc, startAfter, where } from 'firebase/firestore'
+import { addDoc, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, startAfter, updateDoc, where } from 'firebase/firestore'
 import { deleteObject, ref as storageRef } from 'firebase/storage'
 
 interface Get {
@@ -12,6 +12,7 @@ export function useSongsRepository() {
   async function get(params?: Get) {
     const songsCollection = useSongsCollection()
     let q = query(songsCollection)
+    console.log(params)
 
     if (params) {
       if (params.userId)
@@ -48,7 +49,7 @@ export function useSongsRepository() {
 
   async function update(id: string, song: Partial<Song>) {
     const songsCollection = useSongsCollection()
-    const res = await setDoc(doc(songsCollection, id), song)
+    const res = await updateDoc(doc(songsCollection, id), song)
 
     return res
   }
