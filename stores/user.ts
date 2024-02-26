@@ -1,90 +1,50 @@
-import {
-	createUserWithEmailAndPassword,
-	signInWithEmailAndPassword,
-	signOut,
-	updateProfile,
-} from "firebase/auth";
-import { collection, doc, setDoc } from "firebase/firestore";
-import { defineStore } from "pinia";
-
-export interface User {
-	name: string;
-	email: string;
-	age: number;
-	country: string;
-}
+import { defineStore } from 'pinia'
 
 interface UserRegistrationData {
-	name: string;
-	email: string;
-	passwords: {
-		password: string;
-		passwordConfirmation: string;
-	};
-	age: number;
-	country: string;
-	tos: boolean;
+  name: string
+  email: string
+  passwords: {
+    password: string
+    passwordConfirmation: string
+  }
+  age: number
+  country: string
+  tos: boolean
 }
 
-interface UserAuthData {
-	email: string;
-	password: string;
-}
+export const useUserStore = defineStore('User', () => {
+  const userLoggedIn = ref<boolean | null>(null)
 
-interface UserCreateData {
-	name: string;
-	email: string;
-	age: number;
-	country: string;
-}
+  const register = async (values: UserRegistrationData) => {
+    const repository = useUserRepository()
+    const userCredentials = await repository.register(
+      values.email,
+      values.passwords.password,
+    )
 
-export const useUserStore = defineStore("User", () => {
-	const auth = useFirebaseAuth()!;
+    await repository.add(userCredentials.user.uid, {
+      name: values.name,
+      email: values.email,
+      age: values.age,
+      country: values.country,
+    })
 
-	const userLoggedIn = ref<boolean | null>(null);
+    await repository.updateProfile(userCredentials.user, {
+      displayName: values.name,
+    })
+  }
 
-	const createUser = async (email: string, password: string) => {
-		const userCredential = await createUserWithEmailAndPassword(
-			auth,
-			email,
-			password,
-		);
-		return userCredential;
-	};
+  const authenticate = async (email: string, password: string) => {
+    const repository = useUserRepository()
+    await repository.authenticate(email, password)
+  }
 
-	const addUser = async (uid: string, user: UserCreateData) => {
-		const store = useFirestore();
-		const usersCollection = collection(store, "users");
+  const logOut = async () => {
+    const repository = useUserRepository()
+    await repository.logOut()
 
-		return await setDoc(doc(usersCollection, uid), user);
-	};
+    userLoggedIn.value = false
+  }
 
-	const register = async (values: UserRegistrationData) => {
-		const userCredentials = await createUser(
-			values.email,
-			values.passwords.password,
-		);
-
-		await addUser(userCredentials.user.uid, {
-			name: values.name,
-			email: values.email,
-			age: values.age,
-			country: values.country,
-		});
-
-		await updateProfile(userCredentials.user, {
-			displayName: values.name,
-		});
-	};
-
-	const authenticate = async (values: UserAuthData) => {
-		await signInWithEmailAndPassword(auth, values.email, values.password);
-	};
-
-	const logOut = async () => {
-		await signOut(auth);
-		userLoggedIn.value = false;
-	};
-
-	return { userLoggedIn, register, authenticate, logOut };
-});
+  return { userLoggedIn, register, authenticate, logOut }
+})

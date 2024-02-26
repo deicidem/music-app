@@ -1,28 +1,28 @@
 {
-	"files.eol": "\n",
-	"typescript.tsdk": "node_modules/typescript/lib",
-	"remote.autoForwardPortsFallback": 0,
+  "files.eol": "\n",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "remote.autoForwardPortsFallback": 0,
 
-	"eslint.experimental.useFlatConfig": true,
-	"prettier.enable": false,
-	"editor.formatOnSave": false,
-	// Auto fix
-	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": "explicit",
-		"source.organizeImports": "never"
-	},
+  "eslint.experimental.useFlatConfig": true,
+  "prettier.enable": false,
+  "editor.formatOnSave": false,
+  // Auto fix
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
 
-	"eslint.validate": [
-		"javascript",
-		"javascriptreact",
-		"typescript",
-		"typescriptreact",
-		"vue",
-		"html",
-		"markdown",
-		"json",
-		"jsonc",
-		"yaml",
-		"toml"
-	]
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "html",
+    "markdown",
+    "json",
+    "jsonc",
+    "yaml",
+    "toml"
+  ]
 }

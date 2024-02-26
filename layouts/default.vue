@@ -2,11 +2,11 @@
 </script>
 
 <template>
-	<LayoutsDefault>
-		<LayoutsDefaultHeader />
-		<slot />
-		<AuthModal />
-	</LayoutsDefault>
+  <LayoutsDefault>
+    <LayoutsDefaultHeader />
+    <slot />
+    <AuthModal />
+  </LayoutsDefault>
 </template>
 
 <style lang="scss" scoped></style>

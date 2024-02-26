@@ -1,55 +1,48 @@
-import { addDoc, deleteDoc, doc, getDocs, query, setDoc, where } from "firebase/firestore";
-import { deleteObject, ref as storageRef } from "firebase/storage";
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia'
 
-export const useSongsManagerStore = defineStore("SongsManager", () => {
-	const songs = ref<SongWithId[]>([]);
+export const useSongsManagerStore = defineStore('SongsManager', () => {
+  const songs = ref<SongWithId[]>([])
 
-	async function fetchSongs() {
-		const user = useCurrentUser();
-		const songsCollection = useSongsCollection();
+  async function fetchSongs() {
+    const user = useCurrentUser()
+    const repository = useSongsRepository()
 
-		const q = query(songsCollection, where("uid", "==", user.value?.uid));
-		const querySnapshot = await getDocs(q);
+    const res = await repository.get(
+      {
+        orderBy: 'modifiedName',
+        userId: user.value?.uid,
+      },
+    )
 
-		songs.value = querySnapshot.docs.map(doc => doc.data());
-	}
+    songs.value = res
+  }
 
-	async function addSong(song: Song) {
-		const songsCollection = useSongsCollection();
+  async function addSong(song: Song) {
+    const repository = useSongsRepository()
+    const res = await repository.add(song)
 
-		const res = await addDoc(songsCollection, song);
-		songs.value.push({ id: res.id, ...song });
+    songs.value.push({ id: res.id, ...song })
 
-		return res;
-	}
+    return res
+  }
 
-	async function updateSong(id: string, song: Song) {
-		const songsCollection = useSongsCollection();
+  async function updateSong(id: string, song: Song) {
+    const repository = useSongsRepository()
+    const res = await repository.update(id, song)
 
-		const res = await setDoc(doc(songsCollection, id), song);
+    songs.value = songs.value.map((s) => {
+      return s.id === id ? { ...song, id } : s
+    })
 
-		songs.value = songs.value.map((s) => {
-			if (s.id === id)
-				return { ...song, id };
+    return res
+  }
 
-			else
-				return s;
-		});
+  async function deleteSong(song: SongWithId) {
+    const repository = useSongsRepository()
+    repository.remove(song)
 
-		return res;
-	}
+    songs.value = songs.value.filter(s => s.id !== song.id)
+  }
 
-	async function deleteSong(song: SongWithId) {
-		const songsCollection = useSongsCollection();
-		const storage = useFirebaseStorage();
-		const songRef = storageRef(storage, `songs/${song.originalName}`);
-
-		await deleteObject(songRef);
-		await deleteDoc(doc(songsCollection, song.id));
-
-		songs.value = songs.value.filter(s => s.id !== song.id);
-	}
-
-	return { addSong, songs, fetchSongs, updateSong, deleteSong };
-});
+  return { addSong, songs, fetchSongs, updateSong, deleteSong }
+})
